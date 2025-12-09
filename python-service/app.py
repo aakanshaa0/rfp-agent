@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import PyPDF2
 import pytesseract
 import spacy
@@ -14,6 +15,15 @@ import datetime
 nlp = spacy.load("en_core_web_sm")
 
 app = FastAPI(title="Intelligent PDF Reader Agent", version="2.0")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 logging.basicConfig(filename="pdf_agent.log", level=logging.INFO)
 
